@@ -1,9 +1,7 @@
 mod parser;
 mod calculator;
 
-use std::io::{Read, Write};
 use rustyline::{DefaultEditor, Result};
-use rustyline::config::Configurer;
 use rustyline::error::ReadlineError;
 use crate::calculator::Calculator;
 
@@ -41,18 +39,18 @@ fn main() -> Result<()> {
 }
 
 mod test {
-    use crate::{Calculator};
+    use crate::Calculator;
 
     #[test]
     fn test_parse() {
         let mut calc = Calculator::new();
 
-        let parse = |expr: &str| -> Result<f64, String> {
+        let mut parse = |expr: &str| -> Result<f64, String> {
             calc.eval(expr.to_string())
         };
 
-        assert_eq!(parse("1+2"), 3.);
-        assert_eq!(parse("1+2*3"), 7.);
-        assert_eq!(parse("(1+3)%3"), 1.);
+        assert_eq!(parse("1+2"), Ok(3.));
+        assert_eq!(parse("1+2*3"), Ok(7.));
+        assert_eq!(parse("(1+3)%3"), Ok(1.));
     }
 }
